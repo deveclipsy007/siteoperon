@@ -15,7 +15,7 @@ $stmt = $db->query("SELECT COUNT(*) as total FROM leads WHERE status = 'em_andam
 $stats['em_andamento'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
 // Fechados (últimos 30 dias)
-$stmt = $db->query("SELECT COUNT(*) as total FROM leads WHERE status = 'fechado' AND created_at >= date('now', '-30 days')");
+$stmt = $db->query("SELECT COUNT(*) as total FROM leads WHERE status = 'fechado' AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)");
 $stats['fechados_mes'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
 // Leads recentes
