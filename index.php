@@ -17,6 +17,10 @@
 // Iniciar sessão
 session_start();
 
+// Carregar Configurações de Ambiente (.env)
+require_once __DIR__ . '/app/helpers/env.php';
+loadEnv(__DIR__ . '/.env');
+
 // Carregar configurações e helpers
 require_once __DIR__ . '/app/config/database.php';
 require_once __DIR__ . '/app/config/constants.php';

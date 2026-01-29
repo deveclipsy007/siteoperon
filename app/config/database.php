@@ -37,10 +37,11 @@ class Database {
 
                 } else {
                     // MYSQL para produção (Hostinger)
-                    $host = getenv('DB_HOST') ?: 'localhost';
-                    $name = getenv('DB_NAME') ?: 'operon_db';
-                    $user = getenv('DB_USER') ?: 'root';
-                    $pass = getenv('DB_PASS') ?: '';
+                    // Tenta obter do $_ENV ou getenv, com fallback para string vazia
+                    $host = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: 'localhost';
+                    $name = $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?: 'operon_db';
+                    $user = $_ENV['DB_USER'] ?? getenv('DB_USER') ?: 'root';
+                    $pass = $_ENV['DB_PASS'] ?? getenv('DB_PASS') ?: '';
 
                     $dsn = "mysql:host=$host;dbname=$name;charset=utf8mb4";
                     self::$connection = new PDO($dsn, $user, $pass, [
