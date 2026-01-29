@@ -1,0 +1,22 @@
+{
+  "name": "operon-system",
+  "version": "1.0.0",
+  "description": "Motor Replicável - Sistema de Dois Polos com Arquitetura Front Controller",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/operon.css --watch",
+    "build": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/operon.css --minify",
+    "serve": "php -S localhost:8000"
+  },
+  "keywords": [
+    "operon",
+    "php",
+    "tailwind",
+    "quiet-luxury",
+    "motor-replicavel"
+  ],
+  "author": "Operon Agents",
+  "license": "PROPRIETARY",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

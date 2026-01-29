@@ -1,0 +1,84 @@
+# ========================================
+# OPERON SYSTEM - GIT IGNORE
+# ========================================
+
+# Ambiente e Credenciais (NUNCA VERSIONAR)
+.env
+.env.local
+.env.production
+
+# Banco de Dados Local
+database/local.db
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+
+# Logs e Cache
+*.log
+logs/
+cache/
+temp/
+tmp/
+
+# Node.js e npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Composer (se utilizado no futuro)
+vendor/
+composer.lock
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+.buildpath
+
+# Build e Compilação
+dist/
+build/
+*.min.js
+*.min.css
+
+# CSS Compilado (Tailwind)
+# Comentar esta linha se quiser versionar o CSS compilado
+# assets/css/operon.css
+
+# Uploads de Usuários (futuro)
+uploads/*
+!uploads/.gitkeep
+
+# Backups
+*.backup
+*.bak
+*.sql.gz
+backup/
+
+# Arquivos Temporários
+*.tmp
+*.temp
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+.Trash-*
