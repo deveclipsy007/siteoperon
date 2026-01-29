@@ -10,35 +10,20 @@ class Database {
 
     public static function getConnection() {
         if (self::$connection === null) {
-            // Detectar ambiente baseado no hostname
+            // Tentar obter configurações do ambiente
+            $db_host = $_ENV['DB_HOST'] ?? getenv('DB_HOST');
             $server_name = $_SERVER['SERVER_NAME'] ?? 'localhost';
-            $is_local = (
-                $server_name === 'localhost' ||
-                $server_name === '127.0.0.1' ||
-                strpos($server_name, '.local') !== false ||
-                php_sapi_name() === 'cli' // CLI sempre usa SQLite
-            );
+            
+            // Lógica de Decisão:
+            // 1. Se tem DB_HOST definido no .env, usa MySQL (Prioridade Máxima)
+            // 2. Se não tem, e parece ser local/CLI, usa SQLite
+            
+            $use_mysql = !empty($db_host);
 
             try {
-                if ($is_local) {
-                    // SQLITE para desenvolvimento
-                    $db_path = __DIR__ . '/../../database/local.db';
-
-                    // Criar diretório se não existir
-                    $db_dir = dirname($db_path);
-                    if (!file_exists($db_dir)) {
-                        mkdir($db_dir, 0755, true);
-                    }
-
-                    self::$connection = new PDO("sqlite:$db_path");
-
-                    // Habilitar chaves estrangeiras no SQLite
-                    self::$connection->exec('PRAGMA foreign_keys = ON;');
-
-                } else {
-                    // MYSQL para produção (Hostinger)
-                    // Tenta obter do $_ENV ou getenv, com fallback para string vazia
-                    $host = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: 'localhost';
+                if ($use_mysql) {
+                    // MYSQL (Produção ou Dev com configuração explícita)
+                    $host = $db_host;
                     $name = $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?: 'operon_db';
                     $user = $_ENV['DB_USER'] ?? getenv('DB_USER') ?: 'root';
                     $pass = $_ENV['DB_PASS'] ?? getenv('DB_PASS') ?: '';
@@ -47,6 +32,17 @@ class Database {
                     self::$connection = new PDO($dsn, $user, $pass, [
                         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
                     ]);
+
+                } else {
+                    // SQLITE (Fallback para desenvolvimento local sem .env configurado)
+                    $db_path = __DIR__ . '/../../database/local.db';
+                    $db_dir = dirname($db_path);
+                    if (!file_exists($db_dir)) {
+                        mkdir($db_dir, 0755, true);
+                    }
+
+                    self::$connection = new PDO("sqlite:$db_path");
+                    self::$connection->exec('PRAGMA foreign_keys = ON;');
                 }
 
                 // Configurações gerais do PDO
