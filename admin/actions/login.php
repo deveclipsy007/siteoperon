@@ -7,7 +7,8 @@
 // Processar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents(__DIR__ . '/../../debug_login.log', date('[Y-m-d H:i:s] ') . "Login POST received.\n", FILE_APPEND);
-    require_once __DIR__ . '/../../app/config/database.php';
+    file_put_contents(__DIR__ . '/../../debug_login.log', date('[Y-m-d H:i:s] ') . "Login POST received.\n", FILE_APPEND);
+    require_once __DIR__ . '/../../app/bootstrap.php';
 
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';

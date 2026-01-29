@@ -6,9 +6,8 @@
  */
 
 // Carregar dependências
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../helpers/sanitize.php';
-require_once __DIR__ . '/../helpers/format.php';
+// Carregar Bootstrap (Ambiente, Banco, Helpers)
+require_once __DIR__ . '/../bootstrap.php';
 
 // Verificar método
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
